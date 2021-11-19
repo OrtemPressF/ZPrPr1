@@ -683,4 +683,109 @@ void average(){
     fclose(f);
     }
 void under() {
+    FILE *f;
+    char *token, line[100], name[100], surname[100], *sp, *gender, racerName, racerSurname;
+    int *year;
+    float lap1, lap2, lap3, lap4, lap5, autos[30];
+    float time;
+    int LapAll_num, Lap_num, lapCount = 0, isActive = 0, n = 0;
+
+    f = fopen("D:\\Install\\FIIT\\ZkPrPr1\\Project(Clion)ZPrPr1\\tabulka.csv", "r");
+
+    if ((f = fopen("D:\\Install\\FIIT\\ZkPrPr1\\Project(Clion)ZPrPr1\\tabulka.csv", "r")) == NULL) {
+        printf("Subor nie je mozne precitat.");
+        fclose(f);
+    }
+
+    printf("Enter the time:");
+    scanf("%f", &time);
+    rewind(f);
+
+    while (fgets(line, 100, f) != NULL) {
+        sp = strtok(line, " ");
+        strcpy(name, sp);
+        sp = strtok(NULL, ";");
+        strcpy(surname, sp);
+        sp = strtok(NULL, ";");
+        gender = sp;
+        sp = strtok(NULL, ";");
+        year = atoi(sp);
+        sp = strtok(NULL, ";");
+        strcpy(autos, sp);
+        sp = strtok(NULL, ";");
+        lap1 = atof(sp);
+        sp = strtok(NULL, ";");
+        lap2 = atof(sp);
+        sp = strtok(NULL, ";");
+        lap3 = atof(sp);
+        sp = strtok(NULL, ";");
+        lap4 = atof(sp);
+        sp = strtok(NULL, ";");
+        lap5 = atof(sp);
+
+
+        if (lap1 < time) {
+            int Lap_num = 1;
+            lapCount++;
+            isActive = 1;
+        }
+        if (lap2 < time) {
+            int Lap_num = 2;
+            lapCount++;
+            isActive = 1;
+        }
+        if (lap3 < time) {
+            int Lap_num = 3;
+            lapCount++;
+            isActive = 1;
+        }
+        if (lap4 < time) {
+            int Lap_num = 4;
+            lapCount++;
+            isActive = 1;
+        }
+        if (lap5 < time) {
+            int Lap_num = 5;
+            lapCount++;
+            isActive = 1;
+        }
+        if (isActive == 1) {
+            printf("%s %s - %d kola,", name, surname, lapCount);
+            if (lap1 < time) {
+                int Lap_num = 1;
+                printf(" %d (%.3f)", Lap_num, lap1);
+                if (n < lapCount-1) printf(",");
+                n++;
+            }
+            if (lap2 < time) {
+                int Lap_num = 2;
+                printf(" %d (%.3f)", Lap_num, lap2);
+                if (n < lapCount-1) printf(",");
+                n++;
+            }
+            if (lap3 < time) {
+                int Lap_num = 3;
+                printf(" %d (%.3f)", Lap_num, lap3);
+                if (n < lapCount-1) printf(",");
+                n++;
+            }
+            if (lap4 < time) {
+                int Lap_num = 4;
+                printf(" %d (%.3f)", Lap_num, lap4);
+                if (n < lapCount - 1) printf(",");
+                n++;
+            }
+            if (lap5 < time) {
+                int Lap_num = 5;
+                printf(" %d (%.3f)", Lap_num, lap5);
+                if (n < lapCount-1) printf(",");
+                n++;
+            }
+            printf("\n");
+        }
+        n = 0;
+        lapCount = 0;
+        isActive = 0;
+    }
+    fclose(f);
 }
