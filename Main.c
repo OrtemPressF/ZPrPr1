@@ -3,13 +3,26 @@
 #include <stdlib.h>
 
 void sum();
+
 void driver();
+
 void lap();
+
 void gender();
+
 void brand();
+
 void year();
+
 void average();
+
 void under();
+
+void change();
+
+void newdriver();
+
+void rmdriver();
 
 int main() {
     int boolean = 1;
@@ -44,6 +57,19 @@ int main() {
             case 'u':
                 under();
                 break;
+            case 'c':
+                change();
+                break;
+            case 'n':
+                newdriver();
+                break;
+            case 'r':
+                rmdriver();
+                break;
+            case 'x':
+                boolean = 0;
+                break;
+
             default:
                 printf("Try another command \n");
                 break;
@@ -129,6 +155,9 @@ void driver() {
     }
     printf("Enter surname of the racer:");
     scanf("%s", resurname);
+//    if (resurname != name){
+//        printf("No matching racer\n");
+//    }
     while (fgets(line, 100, f) != NULL) {
         sp = strtok(line, " ");
         strcpy(name, sp);
@@ -521,7 +550,8 @@ void brand() {
     fclose(f);
 
 }
-void  year(){
+
+void year() {
     FILE *f;
     char *token;
     char line[100];
@@ -562,7 +592,7 @@ void  year(){
         gender = sp;
         sp = strtok(NULL, ";");
         year = atoi(sp);
-        if(year>yearDO){
+        if (year > yearDO) {
             continue;
         }
         sp = strtok(NULL, ";");
@@ -613,32 +643,25 @@ void  year(){
 
 
     }
-    if(bestLapAll!= 10000){
-    printf("Najlepsie kolo:%.3f\nJazdec: %s %s\nnar. %d\nCislo kola: %d\n", bestLapAll, racerName, racerSurname, yearOFracer,
-           bestLapAll_num);} else printf("There are nor racer who born before %d\n", yearDO);
+    if (bestLapAll != 10000) {
+        printf("Najlepsie kolo:%.3f\nJazdec: %s %s\nnar. %d\nCislo kola: %d\n", bestLapAll, racerName, racerSurname,
+               yearOFracer,
+               bestLapAll_num);
+    } else printf("There are nor racer who born before %d\n", yearDO);
 
     fclose(f);
     while (getchar() != '\n');
 }
-void average(){
+
+void average() {
     FILE *f;
     char *token;
-    char line[100];
-    char name[100];
-    char surname[100];
-    char *sp;
-    char *gender;
-    char *resurname;
-    int *year;
-    float lap1;
-    float lap2;
-    float lap3;
-    float lap4;
-    float lap5;
-    float autos[30];
+    char line[100], name[100], surname[100];
+    char *sp, gender;
+    float lap1, lap2, lap3, lap4, lap5, autos[30];
     char averageName[30], averageSurname[30];
-    float averageLap= 1000;
-
+    float averageLap = 1000;
+    int *year;
 
     f = fopen("D:\\Install\\FIIT\\ZkPrPr1\\Project(Clion)ZPrPr1\\tabulka.csv", "r");
 
@@ -669,19 +692,20 @@ void average(){
         sp = strtok(NULL, ";");
         lap5 = atof(sp);
 
-            float stredne;
-            stredne = (lap1 + lap2 + lap3 + lap4 + lap5) / 5;
-            printf("Priemerne kolo: %.3f\n", stredne);
+        float stredne;
+        stredne = (lap1 + lap2 + lap3 + lap4 + lap5) / 5;
+        printf("%s %s - %.3f\n", name, surname, stredne);
 
         if (averageLap > stredne) {
             averageLap = stredne;
             strcpy(averageName, name);
             strcpy(averageSurname, surname);
         }
-        }
+    }
     printf("Najlepsie:\n %s %s - %.3f\n", averageName, averageSurname, averageLap);
     fclose(f);
-    }
+}
+
 void under() {
     FILE *f;
     char *token, line[100], name[100], surname[100], *sp, *gender, racerName, racerSurname;
@@ -754,19 +778,19 @@ void under() {
             if (lap1 < time) {
                 int Lap_num = 1;
                 printf(" %d (%.3f)", Lap_num, lap1);
-                if (n < lapCount-1) printf(",");
+                if (n < lapCount - 1) printf(",");
                 n++;
             }
             if (lap2 < time) {
                 int Lap_num = 2;
                 printf(" %d (%.3f)", Lap_num, lap2);
-                if (n < lapCount-1) printf(",");
+                if (n < lapCount - 1) printf(",");
                 n++;
             }
             if (lap3 < time) {
                 int Lap_num = 3;
                 printf(" %d (%.3f)", Lap_num, lap3);
-                if (n < lapCount-1) printf(",");
+                if (n < lapCount - 1) printf(",");
                 n++;
             }
             if (lap4 < time) {
@@ -778,7 +802,7 @@ void under() {
             if (lap5 < time) {
                 int Lap_num = 5;
                 printf(" %d (%.3f)", Lap_num, lap5);
-                if (n < lapCount-1) printf(",");
+                if (n < lapCount - 1) printf(",");
                 n++;
             }
             printf("\n");
@@ -786,6 +810,137 @@ void under() {
         n = 0;
         lapCount = 0;
         isActive = 0;
+    }
+    fclose(f);
+}
+
+void change() {
+    FILE *f;
+    char *token;
+    char line[100];
+    char name[100];
+    char surname[100];
+    char *sp;
+    char *gender;
+    char resurname[20];
+    float resurtime;
+    int *year;
+    float lap1;
+    float lap2;
+    float lap3;
+    float lap4;
+    float lap5;
+    float autos[30];
+    int Lap_num, lapNumEnter, currentLap;
+
+    //f = fopen("D:\\Install\\FIIT\\ZkPrPr1\\Project(Clion)ZPrPr1\\tabulka.csv", "r");
+
+    if ((f = fopen("D:\\Install\\FIIT\\ZkPrPr1\\Project(Clion)ZPrPr1\\tabulka.csv", "r+")) == NULL) {
+        printf("Subor nie je mozne precitat.");
+        fclose(f);
+    }
+    printf("Enter surname of the racer:");
+    scanf("%s", resurname);
+    while (getchar() != '\n');
+    printf("Enter lap number:");
+    scanf("%d", &lapNumEnter);
+    while (getchar() != '\n');
+    printf("Enter new lap time:");
+    scanf("%f", &resurtime);
+
+//    if (resurname != name){
+//        printf("No matching racer\n");
+//    }
+    while (fgets(line, 200, f) != NULL) {
+        sp = strtok(line, " ");
+        strcpy(name, sp);
+        sp = strtok(NULL, ";");
+        strcpy(surname, sp);
+        if (strcmp(resurname, surname)) {
+            continue;
+        }
+        for (int i = 0; i <= 5 - lapNumEnter; ++i) {
+            char bu = '\0';
+            while (bu != ';') {
+                bu = fgetc(f);
+                if (bu == '\n') {
+                    fseek(f, -3, SEEK_CUR);
+                    continue;
+                }
+                fseek(f, -2, SEEK_CUR);
+            }
+        }
+        fseek(f, 2, SEEK_CUR);
+        fprintf(f, "%.3f", resurtime);
+        //while (getchar() != '\n');
+        fclose(f);
+        return;
+    }
+    fclose(f);
+    while (getchar() != '\n');
+    while (getchar() != '\n');
+}
+
+void newdriver() {
+
+}
+
+void rmdriver() {
+    FILE *f;
+    char *token;
+    char line[300];
+    char name[100];
+    char surname[100];
+    char *sp;
+
+    float autos[30];
+    float bestLapAll = 10000;
+    char racerName[50], racerSurname[50], buff, name0, resurname[50];
+    int bestLapAll_num = 0, i = 0, j = 0, l = 0;
+    int ch_counter = 0, number = 0, ch_counter_2 = 0;
+    int bestLap_num = 0;
+    int yearDO, yearOFracer;
+
+    //f = fopen("D:\\Install\\FIIT\\ZkPrPr1\\Project(Clion)ZPrPr1\\tabulka.csv", "r");
+
+    if ((f = fopen("D:\\Install\\FIIT\\ZkPrPr1\\Project(Clion)ZPrPr1\\tabulka.csv", "r")) == NULL) {
+        printf("Subor nie je mozne precitat.");
+        fclose(f);
+    }
+    while (fgetc(f) != EOF) {
+        ch_counter++;
+    }
+    rewind(f);
+    ch_counter += 1;
+    char buffer[ch_counter];
+    for (int k = 0; k < ch_counter; ++k) {
+        buffer[k] = 0;
+    }
+    printf("Enter surname of the racer:");
+    scanf("%s", resurname);
+    char buff2[300];
+    while (fgets(buff2, 300, f) != NULL) {
+        strcpy(line, buff2);
+        sp = strtok(line, " ");
+        strcpy(name, sp);
+
+        sp = strtok(NULL, ";");
+        strcpy(surname, sp);
+
+        if (strcmp(resurname, surname)) {
+            strcat(buffer, buff2);
+            ch_counter_2 += strlen(buff2);
+        }
+        if (strcmp(resurname, surname) == 0) {
+            printf("Jazdec s menom \"%s %s\" bol vymazany.\n", name, surname);
+        }
+    }
+    fclose(f);
+    f = fopen("D:\\Install\\FIIT\\ZkPrPr1\\Project(Clion)ZPrPr1\\tabulka.csv", "w");
+
+    while (getchar() != '\n');
+    for (i = 0; i < ch_counter_2; i++) {
+        fprintf(f, "%c", buffer[i]);
     }
     fclose(f);
 }
